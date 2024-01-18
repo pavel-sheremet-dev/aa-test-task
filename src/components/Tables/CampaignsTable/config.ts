@@ -1,8 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 import { Campaign } from "../../../@types";
 
-import { gteFilter } from "./helpers";
+import { dateFilter, gteFilter } from "./helpers";
 
 export const columns: ColumnDef<Campaign>[] = [
   {
@@ -10,6 +11,14 @@ export const columns: ColumnDef<Campaign>[] = [
     header: () => "ID",
     accessorKey: "campaignId",
     cell: (info) => info.getValue(),
+  },
+  {
+    id: "profileId",
+    header: () => "Profile ID",
+    accessorKey: "profileId",
+    cell: (info) => info.getValue(),
+    enableColumnFilter: true,
+    filterFn: "auto",
   },
   {
     id: "clicks",
@@ -28,11 +37,11 @@ export const columns: ColumnDef<Campaign>[] = [
     filterFn: gteFilter,
   },
   {
-    id: "profileId",
-    header: () => "Profile ID",
-    accessorKey: "profileId",
-    cell: (info) => info.getValue(),
-    enableColumnFilter: true,
-    filterFn: "auto",
+    id: "date",
+    header: () => "Date",
+    accessorKey: "date",
+    cell: (info) => format(info.getValue() as Campaign["date"], "dd-MM-yyyy"),
+    sortingFn: "datetime",
+    filterFn: dateFilter,
   },
 ];

@@ -4,7 +4,7 @@ import { Account } from "../../@types";
 
 const createRandomAccount = (): Account => {
   return {
-    accountId: faker.string.nanoid(7),
+    accountId: faker.string.nanoid(10),
     email: faker.internet.email(),
     creationDate: faker.date.past({ years: 0.5 }).toISOString(),
     authToken: faker.string.nanoid(),

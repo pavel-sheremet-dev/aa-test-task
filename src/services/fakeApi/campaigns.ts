@@ -11,7 +11,7 @@ const createRandomCampaign = (id: Profile["profileId"]): Campaign => {
   });
 
   return {
-    campaignId: faker.string.nanoid(7),
+    campaignId: faker.string.nanoid(10),
     profileId: faker.helpers.objectValue({ id }),
     clicks,
     cost,

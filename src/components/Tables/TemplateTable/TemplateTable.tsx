@@ -1,5 +1,5 @@
 import { Table } from "react-bootstrap";
-import { BsSortDown, BsSortUp } from "react-icons/bs";
+import { BsList, BsSortDown, BsSortUp } from "react-icons/bs";
 import { flexRender, Table as ITable } from "@tanstack/react-table";
 import clsx from "clsx";
 
@@ -23,7 +23,15 @@ export const TemplateTable = ({
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <th key={header.id} colSpan={header.colSpan}>
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    style={{
+                      backgroundColor: header.column.getIsSorted()
+                        ? "#c2daff"
+                        : "transparent",
+                    }}
+                  >
                     {header.isPlaceholder ? null : (
                       <>
                         <div
@@ -45,7 +53,9 @@ export const TemplateTable = ({
                             {{
                               asc: <BsSortUp />,
                               desc: <BsSortDown />,
-                            }[header.column.getIsSorted() as string] ?? null}
+                            }[header.column.getIsSorted() as string] ?? (
+                              <BsList color="#999999" />
+                            )}
                           </span>
                         </div>
                         {header.column.getCanFilter() ? (
