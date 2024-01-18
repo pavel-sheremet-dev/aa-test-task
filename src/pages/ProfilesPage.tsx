@@ -50,9 +50,8 @@ const ProfilesPage = () => {
             </Card.Title>
             <GoBack />
           </Stack>
-          {!!data.length && (
-            <ProfilesTable data={data} onRowClickAction={onRowClickAction} />
-          )}
+
+          <ProfilesTable data={data} onRowClickAction={onRowClickAction} />
         </Container>
       </Stack>
     </>

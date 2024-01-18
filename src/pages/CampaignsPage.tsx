@@ -39,7 +39,7 @@ const CampaignsPage = () => {
             </Card.Title>
             <GoBack />
           </Stack>
-          {!!data.length && <CampaignsTable data={data} />}
+          <CampaignsTable data={data} />
         </Container>
       </Stack>
     </>
