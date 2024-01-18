@@ -42,9 +42,8 @@ const AccountsPage = () => {
             </Card.Title>
             <GoBack />
           </Stack>
-          {!!data.length && (
-            <AccountsTable onRowClickAction={onRowClickAction} data={data} />
-          )}
+
+          <AccountsTable onRowClickAction={onRowClickAction} data={data} />
         </Container>
       </Stack>
     </>
