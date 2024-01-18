@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 
-import { Account } from "../../@types";
+import { Account } from "../../../@types";
 
 import { dateFilter } from "./helpers";
 

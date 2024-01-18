@@ -1,35 +1,56 @@
 import { useEffect } from "react";
-import { Card } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Card, Container, Stack } from "react-bootstrap";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-import { Container, ProfilesTable } from "../components";
+import { GoBack, ProfilesTable } from "../components";
 import { useProfiles } from "../context";
 import { ROUTES } from "../routes";
 
+const ACCOUNT_ID = "accountId";
+
 const ProfilesPage = () => {
-  const { data, fetchByAccountId } = useProfiles();
+  const { data, fetchData } = useProfiles();
+  const [searchParams] = useSearchParams();
 
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const accountId = location.state?.id ?? null;
+  const accountId = searchParams.get(ACCOUNT_ID) ?? null;
 
   useEffect(() => {
-    if (!accountId) {
-      navigate(ROUTES.ACCOUNTS.PATH, { replace: true });
-      return;
-    }
-    fetchByAccountId(accountId);
-  }, [accountId, fetchByAccountId, navigate]);
+    fetchData(accountId);
+  }, [fetchData, accountId]);
+
+  const onRowClickAction = (profileId: string) => {
+    const search = new URLSearchParams({ profileId }).toString();
+    navigate(
+      { pathname: ROUTES.CAMPAIGNS.PATH, search },
+      { state: { from: location } }
+    );
+  };
 
   return (
     <>
-      <section className="">
-        <Container>
-          <Card.Title as="h1">Profiles</Card.Title>
-          {!!data.length && <ProfilesTable />}
+      <Stack as="section" gap={2}>
+        <Container fluid>
+          <Stack
+            direction="horizontal"
+            gap={2}
+            className="justify-content-between align-items-center"
+          >
+            <Card.Title as="h1" className="m-0">
+              Profiles
+            </Card.Title>
+            <GoBack />
+          </Stack>
+          {!!data.length && (
+            <ProfilesTable
+              onRowClickAction={onRowClickAction}
+              columnFilter={[{ id: ACCOUNT_ID, value: accountId ?? "" }]}
+            />
+          )}
         </Container>
-      </section>
+      </Stack>
     </>
   );
 };

@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { Profile } from "../../@types";
 import { fakeApi } from "../../services";
 
-import { ProfilesContext } from "./ProfilesContext";
+import { Context, ProfilesContext } from "./ProfilesContext";
 
 interface Props {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ interface Props {
 export function ProfilesProvider({ children }: Props) {
   const [data, setData] = useState<Profile[]>([]);
 
-  const fetchByAccountId = useCallback(async (id: string) => {
+  const fetchData = useCallback<Context["fetchData"]>(async (id) => {
     try {
       const data = await fakeApi.fetchAccountProfiles(id);
       setData(data);
@@ -22,7 +22,7 @@ export function ProfilesProvider({ children }: Props) {
   }, []);
 
   return (
-    <ProfilesContext.Provider value={{ data, fetchByAccountId }}>
+    <ProfilesContext.Provider value={{ data, fetchData }}>
       {children}
     </ProfilesContext.Provider>
   );

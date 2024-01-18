@@ -1,11 +1,9 @@
-import { Container } from "../../../components";
-
-import css from "./styles.module.css";
+import { Card } from "react-bootstrap";
 
 export const Footer = () => {
   return (
-    <footer className={css.footer}>
-      <Container>Footer - {new Date().getFullYear()}</Container>
-    </footer>
+    <Card.Footer as="footer" className="text-center">
+      Footer - {new Date().getFullYear()}
+    </Card.Footer>
   );
 };

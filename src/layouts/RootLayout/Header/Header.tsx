@@ -1,15 +1,15 @@
+import { Card, Stack } from "react-bootstrap";
+
 import { Logo, Navigation } from "../../../components";
 import { ROUTES } from "../../../routes";
 
-import css from "./styles.module.css";
-
 export const Header = () => {
   return (
-    <header className={css.header}>
-      <div className={css.container}>
+    <Card.Header as="header">
+      <Stack direction="horizontal" gap={2}>
         <Logo />
         <Navigation rootPath={ROUTES.HOME.PATH} />
-      </div>
-    </header>
+      </Stack>
+    </Card.Header>
   );
 };

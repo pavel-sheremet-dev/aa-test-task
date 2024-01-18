@@ -1,4 +1,5 @@
 import { Fragment, useMemo } from "react";
+import { Nav } from "react-bootstrap";
 import { useMatches } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
@@ -33,17 +34,16 @@ export const Navigation = ({
   const level = nestingLevel - 1;
 
   return (
-    <ul className="flex w-full flex-col flex-wrap gap-2">
+    <Nav variant="pills" as="ul" className="d-flex justify-content-center">
       {routes.map(({ label, dropDown, index, crumb }) => (
         <Fragment key={crumb}>
           {(!index || crumb === "/") && (
-            <li className="flex flex-col gap-2 uppercase">
-              <NavLink to={crumb} onClick={onLinkClickAction}>
+            <Nav.Item as="li" className="text-center">
+              <Nav.Link as={NavLink} to={crumb} onClick={onLinkClickAction}>
                 {label}
-              </NavLink>
+              </Nav.Link>
               {level > 0 && dropDown.length > 0 && (
-                <div className="flex w-full gap-2">
-                  <div className="ml-1 w-px shrink-0 bg-slate-300 dark:bg-slate-700"></div>
+                <div>
                   <Navigation
                     navItems={dropDown}
                     nestingLevel={level}
@@ -51,11 +51,11 @@ export const Navigation = ({
                   />
                 </div>
               )}
-            </li>
+            </Nav.Item>
           )}
         </Fragment>
       ))}
-    </ul>
+    </Nav>
   );
 };
 

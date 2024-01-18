@@ -1,34 +1,34 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Campaign } from "../../@types";
+import { Profile } from "../../../@types";
 
-export const columns: ColumnDef<Campaign>[] = [
-  {
-    id: "campaignId",
-    header: () => "ID",
-    accessorKey: "campaignId",
-    cell: (info) => info.getValue(),
-  },
-  {
-    id: "clicks",
-    header: () => "Clicks",
-    accessorKey: "clicks",
-    cell: (info) => info.getValue(),
-    enableColumnFilter: true,
-    filterFn: "auto",
-  },
-  {
-    id: "cost",
-    header: () => "Cost",
-    accessorKey: "cost",
-    cell: (info) => info.getValue(),
-    enableColumnFilter: true,
-    filterFn: "auto",
-  },
+export const columns: ColumnDef<Profile>[] = [
   {
     id: "profileId",
-    header: () => "Profile ID",
+    header: () => "ID",
     accessorKey: "profileId",
+    cell: (info) => info.getValue(),
+  },
+  {
+    id: "country",
+    header: () => "Country",
+    accessorKey: "country",
+    cell: (info) => info.getValue(),
+    enableColumnFilter: true,
+    filterFn: "auto",
+  },
+  {
+    id: "marketplace",
+    header: () => "Marketplace",
+    accessorKey: "marketplace",
+    cell: (info) => info.getValue(),
+    enableColumnFilter: true,
+    filterFn: "auto",
+  },
+  {
+    id: "accountId",
+    header: () => "Accound ID",
+    accessorKey: "accountId",
     cell: (info) => info.getValue(),
     enableColumnFilter: true,
     filterFn: "auto",

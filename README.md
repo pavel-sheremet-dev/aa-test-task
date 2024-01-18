@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+## Technical task for AA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Common Stack
 
-Currently, two official plugins are available:
+- Vite.js
+- React.js
+- TypeScript
+- React Router
+- Bootstrap
+- React table
+- Faker.js
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Tasks
 
-## Expanding the ESLint configuration
+Завдання.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Створити веб-застосунок із такою ієрархічною структурою сторінок(таблиць):
+Accounts => Profiles => Campaigns
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+Table [Accounts] {
+"accountId", "email", "authToken", "creationDate"
 }
-```
+Table [Profiles of selected account] {
+"profileId", "country", "marketplace"
+}
+Table [Campaigns of selected profile] {
+"campaignId", "clicks", "cost", "date"
+}
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+3 клікабельні таблиці, які при кліку по одному з рядків - переходять по структурі у вибрану entity.
+Реалізувати сортування, фільтрування та пагінацію до кожної з таблиць.
+
+Можна використовувати Bootstrap модулі для дизайну сторінок/таблиць.
+Набір даних задати константами в коді. (або використати будь-які методи імітування виводу даних із бекенду)
+Будь-які проявлені ініціативи по додавання функціоналу в застосунок - вітаються.
+
+Після виконання завдання - скинути посилання на репозиторій та записати demo-video роботи застосунку.

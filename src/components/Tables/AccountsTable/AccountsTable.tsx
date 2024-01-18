@@ -1,33 +1,36 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Profile } from "../../@types";
-import { useProfiles } from "../../context";
-import { ROUTES } from "../../routes";
-import { TemplateTable } from "..";
+import { Account } from "../../../@types";
+import { TemplateTable } from "../..";
+import { useAccounts } from "../../../context";
 
 import { columns } from "./config";
 
-export const ProfilesTable = () => {
-  const { data } = useProfiles();
-  const navigate = useNavigate();
+interface Props {
+  onRowClickAction: (id: string) => void;
+}
+
+export const AccountsTable = ({ onRowClickAction }: Props) => {
+  const { data } = useAccounts();
+
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "country",
+      id: "creationDate",
       desc: true,
     },
   ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const table = useReactTable<Profile>({
+  const table = useReactTable<Account>({
     data,
     columns,
     state: {
@@ -39,14 +42,16 @@ export const ProfilesTable = () => {
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
     debugHeaders: true,
     debugColumns: false,
   });
 
   const onRowClick = (id: string) => {
-    const { profileId } = table.getRow(id).original;
-    navigate(ROUTES.CAMPAIGNS.PATH, { state: { id: profileId } });
+    const { accountId } = table.getRow(id).original;
+
+    onRowClickAction(accountId);
   };
 
   return <TemplateTable tableData={table} onRowClickAction={onRowClick} />;

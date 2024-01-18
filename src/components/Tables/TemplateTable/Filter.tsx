@@ -6,11 +6,13 @@ import { useDebounce } from "usehooks-ts";
 export const Filter = ({
   column,
   debounceValue = 500,
+  initialValue = "",
 }: {
   column: Column<any, unknown>;
   debounceValue?: number;
+  initialValue: string;
 }) => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(() => initialValue);
   const debouncedValue = useDebounce<string>(value, debounceValue);
   const firstRender = useRef(true);
 

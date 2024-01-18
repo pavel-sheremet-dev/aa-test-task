@@ -2,12 +2,12 @@ import { createContext } from "react";
 
 import { Profile } from "../../@types";
 
-interface Context {
+export interface Context {
   data: Profile[];
-  fetchByAccountId: (id: string) => Promise<void>;
+  fetchData: (id: string | null) => Promise<void>;
 }
 
 export const ProfilesContext = createContext<Context>({
   data: [],
-  fetchByAccountId: async () => {},
+  fetchData: async () => {},
 });

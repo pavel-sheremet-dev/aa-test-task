@@ -1,7 +1,7 @@
 import { FilterFn } from "@tanstack/react-table";
 import { format } from "date-fns";
 
-import { Account } from "../../@types";
+import { Account } from "../../../@types";
 
 export const dateFilter: FilterFn<any> = (row, columnId, value) => {
   const rowValue = row.getValue(columnId);
