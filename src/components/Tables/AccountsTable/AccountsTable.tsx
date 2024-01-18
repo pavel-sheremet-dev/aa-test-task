@@ -10,18 +10,16 @@ import {
 } from "@tanstack/react-table";
 
 import { Account } from "../../../@types";
-import { TemplateTable } from "../..";
-import { useAccounts } from "../../../context";
+import { TemplateTable } from "../../../components";
 
 import { columns } from "./config";
 
 interface Props {
   onRowClickAction: (id: string) => void;
+  data: Account[];
 }
 
-export const AccountsTable = ({ onRowClickAction }: Props) => {
-  const { data } = useAccounts();
-
+export const AccountsTable = ({ onRowClickAction, data }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "creationDate",

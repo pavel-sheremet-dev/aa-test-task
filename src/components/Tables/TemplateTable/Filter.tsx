@@ -1,36 +1,47 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Form, InputGroup } from "react-bootstrap";
+import { DebounceInput } from "react-debounce-input";
+import { useSearchParams } from "react-router-dom";
 import { Column } from "@tanstack/react-table";
-import { useDebounce } from "usehooks-ts";
 
 export const Filter = ({
   column,
-  debounceValue = 500,
-  initialValue = "",
+  debounce = 500,
 }: {
   column: Column<any, unknown>;
-  debounceValue?: number;
-  initialValue: string;
+  debounce?: number;
 }) => {
-  const [value, setValue] = useState<string>(() => initialValue);
-  const debouncedValue = useDebounce<string>(value, debounceValue);
-  const firstRender = useRef(true);
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const value = searchParams.get(column.id) ?? "";
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-    column.setFilterValue(debouncedValue);
-  }, [column, debouncedValue]);
+    if (!value) return;
+    column.setFilterValue(value);
+  }, [column, value]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    column.setFilterValue(value);
+
+    const params: { [x: string]: string } = {};
+
+    searchParams.forEach((val, key) => {
+      if (!value && key === column.id) return;
+      params[key] = val;
+    });
+
+    const newParams = value ? { [column.id]: value } : {};
+    setSearchParams({ ...params, ...newParams });
+  };
 
   return (
     <InputGroup className="mb-3">
       <Form.Control
+        as={DebounceInput}
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={onChange}
         placeholder="Type for filtering"
+        debounceTimeout={debounce}
         aria-label="Filter"
       />
     </InputGroup>

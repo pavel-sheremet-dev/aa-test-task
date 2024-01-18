@@ -10,27 +10,23 @@ import {
 } from "@tanstack/react-table";
 
 import { Campaign } from "../../../@types";
-import { useCampaigns } from "../../../context";
-import { TemplateTable } from "../..";
+import { TemplateTable } from "../../../components";
 
 import { columns } from "./config";
 
 interface Props {
-  onRowClickAction?: (id: string) => void;
-  columnFilter?: ColumnFiltersState;
+  data: Campaign[];
 }
 
-export const CampaignsTable = ({ columnFilter }: Props) => {
-  const { data } = useCampaigns();
+export const CampaignsTable = ({ data }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "cost",
       desc: true,
     },
   ]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    columnFilter ?? []
-  );
+
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable<Campaign>({
     data,

@@ -1,19 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Stack } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { Account } from "../@types";
 import { AccountsTable, GoBack } from "../components";
-import { useAccounts } from "../context";
+import { useData } from "../hooks";
 import { ROUTES } from "../routes";
 
 const AccountsPage = () => {
-  const { fetchAll, data } = useAccounts();
+  const [data, setData] = useState<Account[]>([]);
+  const { fetchAccounts } = useData();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    fetchAll();
-  }, [fetchAll]);
+    (async () => {
+      const data = await fetchAccounts();
+      setData(data);
+    })();
+  }, [fetchAccounts]);
 
   const onRowClickAction = (accountId: string) => {
     const search = new URLSearchParams({ accountId: accountId }).toString();
@@ -38,7 +43,7 @@ const AccountsPage = () => {
             <GoBack />
           </Stack>
           {!!data.length && (
-            <AccountsTable onRowClickAction={onRowClickAction} />
+            <AccountsTable onRowClickAction={onRowClickAction} data={data} />
           )}
         </Container>
       </Stack>

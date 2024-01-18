@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Stack } from "react-bootstrap";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
+import { Profile } from "../@types";
 import { GoBack, ProfilesTable } from "../components";
-import { useProfiles } from "../context";
+import { useData } from "../hooks";
 import { ROUTES } from "../routes";
 
 const ACCOUNT_ID = "accountId";
 
 const ProfilesPage = () => {
-  const { data, fetchData } = useProfiles();
+  const [data, setData] = useState<Profile[]>([]);
+  const { fetchProfiles, fetchAccountProfiles } = useData();
   const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
@@ -18,8 +20,13 @@ const ProfilesPage = () => {
   const accountId = searchParams.get(ACCOUNT_ID) ?? null;
 
   useEffect(() => {
-    fetchData(accountId);
-  }, [fetchData, accountId]);
+    (async () => {
+      const data = accountId
+        ? await fetchAccountProfiles(accountId)
+        : await fetchProfiles();
+      setData(data);
+    })();
+  }, [fetchProfiles, fetchAccountProfiles, accountId]);
 
   const onRowClickAction = (profileId: string) => {
     const search = new URLSearchParams({ profileId }).toString();
@@ -44,10 +51,7 @@ const ProfilesPage = () => {
             <GoBack />
           </Stack>
           {!!data.length && (
-            <ProfilesTable
-              onRowClickAction={onRowClickAction}
-              columnFilter={[{ id: ACCOUNT_ID, value: accountId ?? "" }]}
-            />
+            <ProfilesTable data={data} onRowClickAction={onRowClickAction} />
           )}
         </Container>
       </Stack>

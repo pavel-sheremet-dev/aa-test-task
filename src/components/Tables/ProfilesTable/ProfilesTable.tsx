@@ -10,28 +10,24 @@ import {
 } from "@tanstack/react-table";
 
 import { Profile } from "../../../@types";
-import { useProfiles } from "../../../context";
-import { TemplateTable } from "../..";
+import { TemplateTable } from "../../../components";
 
 import { columns } from "./config";
 
 interface Props {
   onRowClickAction: (id: string) => void;
-  columnFilter?: ColumnFiltersState;
+  data: Profile[];
 }
 
-export const ProfilesTable = ({ onRowClickAction, columnFilter }: Props) => {
-  const { data } = useProfiles();
-
+export const ProfilesTable = ({ onRowClickAction = () => {}, data }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "country",
       desc: true,
     },
   ]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    columnFilter ?? []
-  );
+
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable<Profile>({
     data,
