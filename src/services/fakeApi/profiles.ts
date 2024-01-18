@@ -7,7 +7,7 @@ const createRandomProfile = (id: Account["accountId"]): Profile => {
   return {
     country: faker.location.country(),
     marketplace: faker.helpers.arrayElement(marketplace),
-    profileId: faker.string.nanoid(7),
+    profileId: faker.string.nanoid(10),
     accountId: faker.helpers.objectValue({ id }),
   };
 };
