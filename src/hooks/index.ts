@@ -1,2 +1,2 @@
-export { useAccounts, useCampaigns, useProfiles } from "../context";
+export { useData } from "../context";
 export * from "./shared";

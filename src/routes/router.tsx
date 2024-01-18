@@ -1,11 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { CustomRouteObject } from "../@types";
-import {
-  AccountsProvider,
-  CampaignsProvider,
-  ProfilesProvider,
-} from "../context";
+import { DataProvider } from "../context";
 import { RootLayout } from "../layouts";
 import * as Pages from "../pages";
 
@@ -14,7 +10,11 @@ import { ROUTES } from "./lib";
 export const routes: CustomRouteObject[] = [
   {
     path: ROUTES.HOME.PATH,
-    element: <RootLayout />,
+    element: (
+      <DataProvider>
+        <RootLayout />
+      </DataProvider>
+    ),
     handle: {
       title: "Home",
       crumb: ROUTES.HOME.PATH,
@@ -30,11 +30,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: ROUTES.ACCOUNTS.PATH,
-        element: (
-          <AccountsProvider>
-            <Pages.AccountsPage />
-          </AccountsProvider>
-        ),
+        element: <Pages.AccountsPage />,
         handle: {
           title: "Accounts",
           crumb: ROUTES.ACCOUNTS.PATH,
@@ -42,11 +38,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: ROUTES.PROFILES.PATH,
-        element: (
-          <ProfilesProvider>
-            <Pages.ProfilesPage />
-          </ProfilesProvider>
-        ),
+        element: <Pages.ProfilesPage />,
         handle: {
           title: "Profiles",
           crumb: ROUTES.PROFILES.PATH,
@@ -54,11 +46,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: ROUTES.CAMPAIGNS.PATH,
-        element: (
-          <CampaignsProvider>
-            <Pages.CampaignsPage />
-          </CampaignsProvider>
-        ),
+        element: <Pages.CampaignsPage />,
         handle: {
           title: "Campaigns",
           crumb: ROUTES.CAMPAIGNS.PATH,

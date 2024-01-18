@@ -17,7 +17,7 @@ export const TemplateTable = ({
 }: Props) => {
   return (
     <>
-      <Table striped hover>
+      <Table striped hover responsive>
         <thead>
           {tableData.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -50,12 +50,7 @@ export const TemplateTable = ({
                         </div>
                         {header.column.getCanFilter() ? (
                           <div>
-                            <Filter
-                              column={header.column}
-                              initialValue={
-                                header.column.getFilterValue() as string
-                              }
-                            />
+                            <Filter column={header.column} />
                           </div>
                         ) : null}
                       </>

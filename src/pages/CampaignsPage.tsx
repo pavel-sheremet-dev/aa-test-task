@@ -1,22 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Stack } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
+import { Campaign } from "../@types";
 import { CampaignsTable, GoBack } from "../components";
-import { useCampaigns } from "../context";
+import { useData } from "../hooks";
 
 const PROFILE_ID = "profileId";
 
 const CampaignsPage = () => {
-  const { data, fetchData } = useCampaigns();
+  const [data, setData] = useState<Campaign[]>([]);
+  const { fetchCampaigns, fetchProfileCampaigns } = useData();
 
   const [searchParams] = useSearchParams();
 
   const profileId = searchParams.get(PROFILE_ID) ?? null;
 
   useEffect(() => {
-    fetchData(profileId);
-  }, [profileId, fetchData]);
+    (async () => {
+      const data = profileId
+        ? await fetchProfileCampaigns(profileId)
+        : await fetchCampaigns();
+      setData(data);
+    })();
+  }, [fetchCampaigns, fetchProfileCampaigns, profileId]);
 
   return (
     <>
@@ -32,11 +39,7 @@ const CampaignsPage = () => {
             </Card.Title>
             <GoBack />
           </Stack>
-          {!!data.length && (
-            <CampaignsTable
-              columnFilter={[{ id: PROFILE_ID, value: profileId ?? "" }]}
-            />
-          )}
+          {!!data.length && <CampaignsTable data={data} />}
         </Container>
       </Stack>
     </>

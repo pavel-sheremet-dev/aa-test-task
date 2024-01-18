@@ -1,35 +1,26 @@
 import { faker } from "@faker-js/faker";
 
-import { marketplace, Profile } from "../../@types";
+import { Account, marketplace, Profile } from "../../@types";
 import { randomIntFromInterval } from "../../helpers";
 
-type AccountId = string | null;
-
-const createRandomProfile = (id?: AccountId): Profile => {
-  const accountId = id
-    ? faker.helpers.objectValue({ id })
-    : faker.string.nanoid(7);
+const createRandomProfile = (id: Account["accountId"]): Profile => {
   return {
     country: faker.location.country(),
     marketplace: faker.helpers.arrayElement(marketplace),
     profileId: faker.string.nanoid(7),
-    accountId,
+    accountId: faker.helpers.objectValue({ id }),
   };
 };
 
-export const fetchAccountProfiles = async (id: AccountId) => {
+export const createProfiles = async (id: Account["accountId"]) => {
   const promise = new Promise<Profile[]>((resolve) => {
     setTimeout(() => {
-      const randomData = faker.helpers.multiple(() => createRandomProfile(), {
-        count: 500,
+      const data = faker.helpers.multiple(() => createRandomProfile(id), {
+        count: randomIntFromInterval(1, 45),
       });
 
-      const dataWithId = faker.helpers.multiple(() => createRandomProfile(id), {
-        count: randomIntFromInterval(20, 100),
-      });
-
-      resolve([...randomData, ...dataWithId]);
-    }, 50);
+      resolve(data);
+    }, 15);
   });
   return promise;
 };
