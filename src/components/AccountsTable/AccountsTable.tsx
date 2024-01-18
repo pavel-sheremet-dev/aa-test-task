@@ -15,7 +15,6 @@ import { useAccounts } from "../../context";
 import { ROUTES } from "../../routes";
 
 import { columns } from "./config";
-import { dateFilter } from "./helpers";
 
 export const AccountsTable = () => {
   const { data } = useAccounts();
@@ -34,9 +33,6 @@ export const AccountsTable = () => {
     state: {
       sorting,
       columnFilters,
-    },
-    filterFns: {
-      dateFilter,
     },
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,

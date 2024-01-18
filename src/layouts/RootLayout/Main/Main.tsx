@@ -1,5 +1,9 @@
 import css from "./styles.module.css";
 
-export const Main = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const Main = ({ children }: Props) => {
   return <main className={css.main}>{children}</main>;
 };

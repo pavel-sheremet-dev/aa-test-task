@@ -27,7 +27,7 @@ const CampaignsPage = () => {
     <>
       <section className="">
         <Container>
-          <Card.Title as="h1">Profiles</Card.Title>
+          <Card.Title as="h1">Campaigns</Card.Title>
           {!!data.length && <CampaignsTable />}
         </Container>
       </section>

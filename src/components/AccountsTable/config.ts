@@ -3,6 +3,8 @@ import { format } from "date-fns";
 
 import { Account } from "../../@types";
 
+import { dateFilter } from "./helpers";
+
 export const columns: ColumnDef<Account>[] = [
   {
     id: "accountId",
@@ -25,6 +27,6 @@ export const columns: ColumnDef<Account>[] = [
     cell: (info) =>
       format(info.getValue() as Account["creationDate"], "dd-MM-yyyy"),
     sortingFn: "datetime",
-    filterFn: "dateFilter",
+    filterFn: dateFilter,
   },
 ];
