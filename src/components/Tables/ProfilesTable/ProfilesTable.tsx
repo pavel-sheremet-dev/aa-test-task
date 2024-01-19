@@ -11,6 +11,7 @@ import {
 
 import { Profile } from "../../../@types";
 import { TemplateTable } from "../../../components";
+import { ENV } from "../../../config";
 
 import { columns } from "./config";
 
@@ -42,8 +43,8 @@ export const ProfilesTable = ({ onRowClickAction = () => {}, data }: Props) => {
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    debugTable: true,
-    debugHeaders: true,
+    debugTable: ENV().DEVELOPMENT,
+    debugHeaders: ENV().DEVELOPMENT,
     debugColumns: false,
   });
 

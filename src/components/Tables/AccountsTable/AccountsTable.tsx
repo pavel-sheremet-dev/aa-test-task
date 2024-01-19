@@ -11,6 +11,7 @@ import {
 
 import { Account } from "../../../@types";
 import { TemplateTable } from "../../../components";
+import { ENV } from "../../../config";
 
 import { columns } from "./config";
 
@@ -41,8 +42,8 @@ export const AccountsTable = ({ onRowClickAction, data }: Props) => {
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    debugTable: true,
-    debugHeaders: true,
+    debugTable: ENV().DEVELOPMENT,
+    debugHeaders: ENV().DEVELOPMENT,
     debugColumns: false,
   });
 
